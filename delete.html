@@ -6,14 +6,14 @@
     <title>Interação com APIs | Create com POST</title>
 </head>
 <body>
-    <h1>Create com Post</h1>
+    <h1>Delete com Delete</h1>
     <a href="./index.html">↩ Home</a>
 
     <form action="" method="post">
         
         <div class="controle-form">
             <label for="idProduto">ID do produto:</label>
-            <input type="number" id="idProduto" name="idProduto" min="1" disabled>
+            <input type="number" id="idProduto" name="idProduto" min="1" Disable>
         </div>
 
         <div class="controle-form">
@@ -23,14 +23,16 @@
 
         <div class="controle-form">
             <label for="tipoProduto">Tipo de produto:</label>
-            <select name="tipoProduto" id="tipoProduto">
+            <select name="tipoProduto" id="tipoProduto" disable>
                 <option value="Carroceria">Carroceria</option>
                 <option value="Controle">Controle</option>
                 <option value="Opcional" selected>Opcional</option>
+                <option value="Segurança">Segurança</option>
+                <option value="Power Train"> Power Train</option>
             </select>
         </div>
 
-        <button type="button" id="cadastrar">Cadastrar</button>
+        <button type="button" id="cadastrar">Remover</button>
     </form>
 
     <div id="produtos">
@@ -40,7 +42,7 @@
     <script>
         buscarProdutos();
 
-        document.querySelector('#cadastrar').addEventListener('click', () => {
+        document.querySelector('#remover').addEventListener('click', () => {
 
             const dadosProduto = {
                 "id": null,
@@ -48,15 +50,16 @@
                 "tipo": document.querySelector('#tipoProduto').value
             }
 
-            fetch('http://[::1]:3000/produtos', {
-                method: 'POST',
+            const idProduto = document.querySelector('#idProduto')
+
+            fetch(`http://[::1]:3000/produtos/${idProduto}`, {
+                method: 'DELETE',
                 headers: {
                     'Content-type': 'application/json'
                 },
-                body: JSON.stringify(dadosProduto)
             }).then(resposta => {
                 if (resposta.ok) {
-                    alert('Produto cadastrado!');
+                    window.alert('Produto Removido!');
                     buscarProdutos();
                 } else {
                     window.alert('Erro!');
