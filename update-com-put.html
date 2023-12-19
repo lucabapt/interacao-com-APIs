@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interação com APIs | Create com POST</title>
 </head>
+
 <body>
     <h1>Update com Put</h1>
     <a href="./index.html">↩ Home</a>
 
     <form action="" method="post">
-        
+
         <div class="controle-form">
             <label for="idProduto">ID do produto:</label>
             <input type="number" id="idProduto" name="idProduto" min="1" required>
@@ -38,7 +40,7 @@
     <div id="produtos">
         <h2>Produtos</h2>
     </div>
-    
+
     <script>
         buscarProdutos();
 
@@ -76,22 +78,39 @@
                     'Content-type': 'application/json'
                 }
             })
-            .then(resposta => resposta.json())
-            .then(resposta => {
+                .then(resposta => resposta.json())
+                .then(resposta => {
 
-                const divProdutos = document.querySelector('#produtos');
-                const tituloProdutos = document.createElement('h2');
-                
-                divProdutos.innerHTML = '';
-                tituloProdutos.innerHTML = 'Produtos';
-                divProdutos.append(tituloProdutos);
+                    const divProdutos = document.querySelector('#produtos');
+                    const tituloProdutos = document.createElement('h2');
 
-                resposta.forEach(produto => {
-                    divProdutos.innerHTML += `<ul><li>ID: ${produto.id}</li><li>Nome: ${produto.nome}</li></ul>Tipo: ${produto.tipo ?? ""}</li></ul>;
+                    divProdutos.innerHTML = '';
+                    tituloProdutos.innerHTML = 'Produtos';
+                    divProdutos.append(tituloProdutos);
+
+                    resposta.forEach(produto => {
+                        const ulProduto = document.createElement('ul')
+                        ulProduto.id = produto.id;
+                        ulProduto.classList.add('produto');
+                        const liIdProduto = document.createElement('li');
+                        liIdProduto.innerHTML = produto.id;
+                        const liNomeProduto = document.createElement('li');
+                        liNomeProduto.innerHTML = produto.nome ?? "";
+                        const liTipoProduto = document.createElement('li');
+                        liTipoProduto.innerHTML = produto.tipo ?? "";
+
+                        ulProduto.appendChild(ulProduto).append(liIdProduto, liNomeProduto, liTipoProduto);
+
+                        divProdutos.appendChild(ulProduto).append (liIdProduto, liNomeProduto, liTipoProduto);
                 });
             })
 
-        }
+        } 
+        doument.addEventListener('click', event => {
+            console.log(event)
+
+        })
     </script>
 </body>
+
 </html>
